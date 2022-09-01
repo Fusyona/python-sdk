@@ -19,12 +19,12 @@ if accounts:
     # Now let's try to find a token in cache for this account
     result = app.acquire_token_silent(["openid"], account=chosen)
 
-if not result:
-    # So no suitable token exists in cache. Let's get a new one from Azure AD.
-    result = app.acquire_token_silent(scopes=["openid", "profile", "email", "https://accounts.fusyona.com/api/WriteUserProfileAPI", "https://accounts.fusyona.com/api/ReadUserProfileAPI"], account=chosen)
-if "access_token" in result:
-    print(result["access_token"])  # Yay!
-else:
-    print(result.get("error"))
-    print(result.get("error_description"))
-    print(result.get("correlation_id"))  # You may need this when reporting a bug
+    if not result:
+        # So no suitable token exists in cache. Let's get a new one from Azure AD.
+        result = app.acquire_token_silent(scopes=["openid", "profile", "email", "https://accounts.fusyona.com/api/WriteUserProfileAPI", "https://accounts.fusyona.com/api/ReadUserProfileAPI"], account=chosen)
+    if "access_token" in result:
+        print(result["access_token"])  # Yay!
+    else:
+        print(result.get("error"))
+        print(result.get("error_description"))
+        print(result.get("correlation_id"))  # You may need this when reporting a bug
