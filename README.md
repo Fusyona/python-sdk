@@ -1,2 +1,1 @@
-
-# python-sdk
+# Fusyona Python SDK
