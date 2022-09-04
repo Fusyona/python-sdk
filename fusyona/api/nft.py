@@ -1,5 +1,6 @@
 
 import json
+from urllib import response
 import fusyona.constants.url as url
 import requests
 from fusyona.api.utils.common import GetHeaders
@@ -80,4 +81,18 @@ def PostCreateCollection(
         return response.json()
 
     return { "Response" : str(response.status_code)}
+
+
+
+def GetSingleCollection(bearerToken : str, subscriptionKey : str, collectionId : str) -> json:
+
+    headers = GetHeaders(
+        bearerToken, 
+        subscriptionKey
+    )
+
+    response = requests.get(url=url.SingleCollection(collectionId), headers=headers)
+
+    return response.json()
+
 
