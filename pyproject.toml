@@ -1,20 +1,15 @@
 [tool.poetry]
-name = "python-sdk"
-description = ""
-authors = ["leandro-rodriguez <leandro__rodriguez@outlook.com>"]
-packages = [
-  {include = "sdk"},
-]
-readme = "README.md"
+name = "fusyona"
 version = "0.1.0"
-
+description = ""
+authors = ["leandro-driguez <leandro__rodriguez@outlook.com>"]
+readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
+requests = "^2.28.1"
 
-[tool.poetry.dev-dependencies]
-pytest = "^5.2"
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
