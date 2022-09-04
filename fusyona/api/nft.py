@@ -2,7 +2,7 @@
 import json
 import fusyona.constants.url as url
 import requests
-from fusyona.api.common import GetHeaders
+from fusyona.api.utils.common import GetHeaders
 
 
 def GetCollectionWithPagination(bearerToken : str, subscriptionKey : str, pageNumber : int) -> json:
@@ -70,6 +70,9 @@ def PostCreateCollection(
         raise Exception("There is an error with the creation")
 
     approvedLink = response.json()['payment']['value']['approvedLink']
+
+    if len(approvedLink) == 0:
+        raise Exception(f"Error {response.status_code}: approvedLink is empty")
 
     response = requests.post(url=approvedLink, headers=headers)
 
