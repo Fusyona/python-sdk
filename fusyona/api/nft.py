@@ -33,3 +33,48 @@ def GetCollectionsList(bearerToken : str, subscriptionKey : str) -> json:
     )    
 
     return response.json()
+
+
+def PostCreateCollection(
+        bearerToken : str, subscriptionKey : str,
+        coverImage : bytes, logoImage : bytes,
+        featuredImage : bytes, blockchainNetwork : str,
+        name : str, description : str, 
+        royalties : float, category : str,
+        externalLink : str
+    ) -> json:
+
+    headers = GetHeaders(
+        bearerToken, 
+        subscriptionKey
+    )
+
+    files = {
+        "CoverImage": coverImage,  
+        "LogoImage": logoImage, 
+        "FeaturedImage": featuredImage
+    }
+
+    body = {
+        "BlockchainNetwork": blockchainNetwork,
+        "Name": name,
+        "Description" : description, 
+        "Royalties" : str(royalties),
+        "Category" : category,
+        "ExternalLink" : externalLink,
+    }
+
+    response = requests.post(url=url.CreateCollection(), headers=headers, data=body, files=files)
+
+    if response.status_code != 200:
+        raise Exception("There is an error with the creation")
+
+    approvedLink = response.json()['payment']['value']['approvedLink']
+
+    response = requests.post(url=approvedLink, headers=headers)
+
+    if len(response.content) != 0:
+        return response.json()
+
+    return { "Response" : str(response.status_code)}
+
