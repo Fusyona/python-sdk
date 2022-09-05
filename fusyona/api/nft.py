@@ -143,7 +143,15 @@ def GetTokensListWithPagination(bearerToken : str, subscriptionKey : str, collec
     return response.json()
 
 
+def GetGiftsListWithPagination(bearerToken : str, subscriptionKey : str, collectionId : str, pageNumber : int) -> json:
 
+    headers = GetHeaders(
+        bearerToken, 
+        subscriptionKey
+    )
 
+    response = requests.get(url=url.GiftsListWithPagination(collectionId, pageNumber), headers=headers)
+    
+    return response.json()
 
     
