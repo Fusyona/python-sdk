@@ -119,3 +119,13 @@ def GetSingleToken(bearerToken : str, subscriptionKey : str, collectionId : str,
 
    
 
+def GetTokensList(bearerToken : str, subscriptionKey : str, collectionId : str) -> json:
+
+    headers = GetHeaders(
+        bearerToken, 
+        subscriptionKey
+    )
+
+    response = requests.get(url=url.TokensList(collectionId), headers=headers)
+    
+    return response.json()
