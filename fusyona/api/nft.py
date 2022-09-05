@@ -129,3 +129,21 @@ def GetTokensList(bearerToken : str, subscriptionKey : str, collectionId : str) 
     response = requests.get(url=url.TokensList(collectionId), headers=headers)
     
     return response.json()
+
+
+def GetTokensListWithPagination(bearerToken : str, subscriptionKey : str, collectionId : str, pageNumber : int) -> json:
+
+    headers = GetHeaders(
+        bearerToken, 
+        subscriptionKey
+    )
+
+    response = requests.get(url=url.TokensListWithPagination(collectionId, pageNumber), headers=headers)
+    
+    return response.json()
+
+
+
+
+
+    
