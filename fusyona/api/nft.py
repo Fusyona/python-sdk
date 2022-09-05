@@ -1,38 +1,30 @@
 
-import json
+from typing import Any, Callable, List
 import fusyona.constants.url as url
 import requests
 from fusyona.api.utils.common import GetHeaders
 
 
-def GetCollectionWithPagination(bearerToken : str, subscriptionKey : str, pageNumber : int) -> json:
-    
-    headers = GetHeaders(
-        bearerToken, 
-        subscriptionKey
+def GetCollectionWithPagination(bearerToken : str, subscriptionKey : str, pageNumber : int) -> Any:
+
+    return ConstructRequest(
+        method="get", 
+        bearerToken=bearerToken,
+        subscriptionKey=subscriptionKey,
+        getUrl=url.CollectionsWithPagination,
+        params=[pageNumber]
     )
 
-    response = requests.get(
-        url=url.CollectionsWithPagination(pageNumber), 
-        headers=headers
+
+def GetCollectionsList(bearerToken : str, subscriptionKey : str) -> Any:
+
+    return ConstructRequest(
+        method="get", 
+        bearerToken=bearerToken,
+        subscriptionKey=subscriptionKey,
+        getUrl=url.CollectionsList,
+        params=[]
     )
-
-    return response.json()
-
-
-def GetCollectionsList(bearerToken : str, subscriptionKey : str) -> json:
-
-    headers = GetHeaders(
-        bearerToken, 
-        subscriptionKey
-    )
-
-    response = requests.get(
-        url=url.CollectionsList(), 
-        headers=headers
-    )    
-
-    return response.json()
 
 
 def PostCreateCollection(
@@ -42,7 +34,7 @@ def PostCreateCollection(
         name : str, description : str, 
         royalties : float, category : str,
         externalLink : str
-    ) -> json:
+    ) -> Any:
 
     headers = GetHeaders(
         bearerToken, 
@@ -82,98 +74,124 @@ def PostCreateCollection(
     return { "Response" : str(response.status_code)}
 
 
-def GetSingleCollection(bearerToken : str, subscriptionKey : str, collectionId : str) -> json:
+def GetSingleCollection(bearerToken : str, subscriptionKey : str, collectionId : str) -> Any:
 
-    headers = GetHeaders(
-        bearerToken, 
-        subscriptionKey
+    return ConstructRequest(
+        method="get", 
+        bearerToken=bearerToken,
+        subscriptionKey=subscriptionKey,
+        getUrl=url.SingleCollection,
+        params=[collectionId]
     )
 
-    response = requests.get(url=url.SingleCollection(collectionId), headers=headers)
 
-    return response.json()
+def PostCreateToken(bearerToken : str, subscriptionKey : str, collectionId : str) -> Any:
 
-
-def PostCreateToken(bearerToken : str, subscriptionKey : str, collectionId : str) -> json:
-
-    headers = GetHeaders(
-        bearerToken, 
-        subscriptionKey
+    return ConstructRequest(
+        method="post", 
+        bearerToken=bearerToken,
+        subscriptionKey=subscriptionKey,
+        getUrl=url.CreateToken,
+        params=[collectionId]
     )
 
-    response = requests.get(url=url.CreateToken(collectionId), headers=headers)
 
-    return response.json()
+def GetSingleToken(
+        bearerToken : str, subscriptionKey : str, 
+        collectionId : str, tokenId : str
+    ) -> Any:
+
+    return ConstructRequest(
+        method="get", 
+        bearerToken=bearerToken,
+        subscriptionKey=subscriptionKey,
+        getUrl=url.SingleToken,
+        params=[collectionId, tokenId]
+    )
+
+  
+def GetTokensList(
+        bearerToken : str, subscriptionKey : str, 
+        collectionId : str
+    ) -> Any:
+
+    return ConstructRequest(
+        method="get", 
+        bearerToken=bearerToken,
+        subscriptionKey=subscriptionKey,
+        getUrl=url.TokensList,
+        params=[collectionId]
+    )
+
+
+def GetTokensListWithPagination(
+        bearerToken : str, subscriptionKey : str, 
+        collectionId : str, pageNumber : int
+    ) -> Any:
+
+    return ConstructRequest(
+        method="get", 
+        bearerToken=bearerToken,
+        subscriptionKey=subscriptionKey,
+        getUrl=url.TokensListWithPagination,
+        params=[collectionId, pageNumber]
+    )
+
+
+def GetGiftsListWithPagination(
+        bearerToken : str, subscriptionKey : str, 
+        collectionId : str, pageNumber : int
+    ) -> Any:
+
+    return ConstructRequest(
+        method="get", 
+        bearerToken=bearerToken,
+        subscriptionKey=subscriptionKey,
+        getUrl=url.GiftsListWithPagination,
+        params=[collectionId, pageNumber]
+    )
+
     
+def PostPaymentConfirmation(bearerToken : str, subscriptionKey : str, id : str) -> Any:
 
-def GetSingleToken(bearerToken : str, subscriptionKey : str, collectionId : str, tokenId : str) -> json:
+    return ConstructRequest(
+        method="post", 
+        bearerToken=bearerToken,
+        subscriptionKey=subscriptionKey,
+        getUrl=url.PaymentConfirmation,
+        params=[id]
+    )
+
+
+def PostPaymentCancel(bearerToken : str, subscriptionKey : str, id : str) -> Any:
+
+    return ConstructRequest(
+        method="post", 
+        bearerToken=bearerToken,
+        subscriptionKey=subscriptionKey,
+        getUrl=url.PaymentCancel,
+        params=[id]
+    )
+
+
+def ConstructRequest(
+        method : str, 
+        bearerToken : str, 
+        subscriptionKey : str, 
+        getUrl : Callable, 
+        params : List[Any]
+    ) -> Any:
 
     headers = GetHeaders(
         bearerToken, 
         subscriptionKey
     )
 
-    response = requests.get(url=url.SingleToken(collectionId, tokenId), headers=headers)
-
-    return response.json()
-
-   
-def GetTokensList(bearerToken : str, subscriptionKey : str, collectionId : str) -> json:
-
-    headers = GetHeaders(
-        bearerToken, 
-        subscriptionKey
+    response = requests.request(
+        method=method,
+        url=getUrl(*params), 
+        headers=headers
     )
-
-    response = requests.get(url=url.TokensList(collectionId), headers=headers)
-    
-    return response.json()
-
-
-def GetTokensListWithPagination(bearerToken : str, subscriptionKey : str, collectionId : str, pageNumber : int) -> json:
-
-    headers = GetHeaders(
-        bearerToken, 
-        subscriptionKey
-    )
-
-    response = requests.get(url=url.TokensListWithPagination(collectionId, pageNumber), headers=headers)
-    
-    return response.json()
-
-
-def GetGiftsListWithPagination(bearerToken : str, subscriptionKey : str, collectionId : str, pageNumber : int) -> json:
-
-    headers = GetHeaders(
-        bearerToken, 
-        subscriptionKey
-    )
-
-    response = requests.get(url=url.GiftsListWithPagination(collectionId, pageNumber), headers=headers)
-    
-    return response.json()
-
-    
-def PostPaymentConfirmation(bearerToken : str, subscriptionKey : str, id : str) -> json:
-
-    headers = GetHeaders(
-        bearerToken, 
-        subscriptionKey
-    )
-
-    response = requests.post(url=url.PaymentConfirmation(id), headers=headers)
-    
-    return response.json()
-
-
-def PostPaymentCancel(bearerToken : str, subscriptionKey : str, id : str) -> json:
-
-    headers = GetHeaders(
-        bearerToken, 
-        subscriptionKey
-    )
-
-    response = requests.post(url=url.PaymentCancel(id), headers=headers)
     
     return response.json()
 
