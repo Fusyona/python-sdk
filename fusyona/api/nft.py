@@ -1,11 +1,14 @@
 
-from typing import Any, Callable, List
-import fusyona.constants.url as url
 import requests
-from fusyona.api.utils.common import GetHeaders
+from typing import Any
+import fusyona.constants.url as url
+from fusyona.api.utils.common import GetHeaders, ConstructRequest
 
 
-def GetCollectionWithPagination(bearerToken : str, subscriptionKey : str, pageNumber : int) -> Any:
+def GetCollectionWithPagination(
+        bearerToken : str, subscriptionKey : str, 
+        pageNumber : int
+    ) -> Any:
 
     return ConstructRequest(
         method="get", 
@@ -16,7 +19,9 @@ def GetCollectionWithPagination(bearerToken : str, subscriptionKey : str, pageNu
     )
 
 
-def GetCollectionsList(bearerToken : str, subscriptionKey : str) -> Any:
+def GetCollectionsList(
+        bearerToken : str, subscriptionKey : str
+    ) -> Any:
 
     return ConstructRequest(
         method="get", 
@@ -56,7 +61,10 @@ def PostCreateCollection(
         "ExternalLink" : externalLink,
     }
 
-    response = requests.post(url=url.CreateCollection(), headers=headers, data=body, files=files)
+    response = requests.post(
+        url=url.CreateCollection(), headers=headers, 
+        data=body, files=files
+    )
 
     if response.status_code != 200:
         raise Exception("There is an error with the creation")
@@ -74,7 +82,10 @@ def PostCreateCollection(
     return { "Response" : str(response.status_code)}
 
 
-def GetSingleCollection(bearerToken : str, subscriptionKey : str, collectionId : str) -> Any:
+def GetSingleCollection(
+        bearerToken : str, subscriptionKey : str, 
+        collectionId : str
+    ) -> Any:
 
     return ConstructRequest(
         method="get", 
@@ -85,7 +96,10 @@ def GetSingleCollection(bearerToken : str, subscriptionKey : str, collectionId :
     )
 
 
-def PostCreateToken(bearerToken : str, subscriptionKey : str, collectionId : str) -> Any:
+def PostCreateToken(
+        bearerToken : str, subscriptionKey : str, 
+        collectionId : str
+    ) -> Any:
 
     return ConstructRequest(
         method="post", 
@@ -152,7 +166,10 @@ def GetGiftsListWithPagination(
     )
 
     
-def PostPaymentConfirmation(bearerToken : str, subscriptionKey : str, id : str) -> Any:
+def PostPaymentConfirmation(
+        bearerToken : str, subscriptionKey : str, 
+        id : str
+    ) -> Any:
 
     return ConstructRequest(
         method="post", 
@@ -163,7 +180,10 @@ def PostPaymentConfirmation(bearerToken : str, subscriptionKey : str, id : str) 
     )
 
 
-def PostPaymentCancel(bearerToken : str, subscriptionKey : str, id : str) -> Any:
+def PostPaymentCancel(
+        bearerToken : str, subscriptionKey : str, 
+        id : str
+    ) -> Any:
 
     return ConstructRequest(
         method="post", 
@@ -172,26 +192,4 @@ def PostPaymentCancel(bearerToken : str, subscriptionKey : str, id : str) -> Any
         getUrl=url.PaymentCancel,
         params=[id]
     )
-
-
-def ConstructRequest(
-        method : str, 
-        bearerToken : str, 
-        subscriptionKey : str, 
-        getUrl : Callable, 
-        params : List[Any]
-    ) -> Any:
-
-    headers = GetHeaders(
-        bearerToken, 
-        subscriptionKey
-    )
-
-    response = requests.request(
-        method=method,
-        url=getUrl(*params), 
-        headers=headers
-    )
-    
-    return response.json()
 
