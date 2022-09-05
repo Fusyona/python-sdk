@@ -118,7 +118,6 @@ def GetSingleToken(bearerToken : str, subscriptionKey : str, collectionId : str,
     return response.json()
 
    
-
 def GetTokensList(bearerToken : str, subscriptionKey : str, collectionId : str) -> json:
 
     headers = GetHeaders(
@@ -155,3 +154,26 @@ def GetGiftsListWithPagination(bearerToken : str, subscriptionKey : str, collect
     return response.json()
 
     
+def PostPaymentConfirmation(bearerToken : str, subscriptionKey : str, id : str) -> json:
+
+    headers = GetHeaders(
+        bearerToken, 
+        subscriptionKey
+    )
+
+    response = requests.post(url=url.PaymentConfirmation(id), headers=headers)
+    
+    return response.json()
+
+
+def PostPaymentCancel(bearerToken : str, subscriptionKey : str, id : str) -> json:
+
+    headers = GetHeaders(
+        bearerToken, 
+        subscriptionKey
+    )
+
+    response = requests.post(url=url.PaymentCancel(id), headers=headers)
+    
+    return response.json()
+
