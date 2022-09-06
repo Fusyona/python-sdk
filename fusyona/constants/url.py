@@ -64,7 +64,7 @@ WithdrawalAsync :  Callable [[str, str, str], str] = lambda address_id, to_publi
 ################ Payment ################  
 #########################################  
 
-Checkout :  Callable [[str, str, str], str] = lambda address_id, to_public_key, amount :  f"https://api.fusyona.com/pay/v1/Checkout" 
+Checkout :  Callable [[str, str, str], str] = lambda :  f"https://api.fusyona.com/pay/v1/Checkout" 
 """POST: Checkout"""
 
 CheckoutCancel :  Callable [[str], str] = lambda id :  f"https://api.fusyona.com/pay/v1/CheckoutCancel/{id}" 
