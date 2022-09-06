@@ -1,8 +1,8 @@
 
 
 from typing import Any
-import fusyona.constants.url as url
-from fusyona.api.utils.common import ConstructRequest
+import fusyona.url.wallet as url
+from fusyona.utils.common import ConstructRequest
 
 
 def GetBalanceAsync(

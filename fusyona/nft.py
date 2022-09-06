@@ -1,8 +1,8 @@
 
 import requests
 from typing import Any
-import fusyona.constants.url as url
-from fusyona.api.utils.common import GetHeaders, ConstructRequest
+import fusyona.url.nft as url
+from fusyona.utils.common import GetHeaders, ConstructRequest
 
 
 def GetCollectionWithPagination(
