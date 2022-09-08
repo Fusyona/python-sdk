@@ -78,5 +78,5 @@ GetPageToken: Callable[[], str] = lambda : f"https://api.fusyona.com/social/v1/p
 PostPageUnfollow: Callable[[], str] = lambda : f"https://api.fusyona.com/social/v1/pages/{pageId}/unFollow/{followerId}"
 """method: `POST`\ndescription: Post page unfollow"""
 
-GetPageWithPagination: Callable[[], str] = lambda : f"https://api.fusyona.com/social/v1/pages/page/{pageNumber}"
+GetPagesWithPagination: Callable[[], str] = lambda : f"https://api.fusyona.com/social/v1/pages/page/{pageNumber}"
 """method: `GET`\ndescription: Get page with pagination"""
