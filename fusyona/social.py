@@ -1,7 +1,7 @@
 from pickletools import int4, long1
 from tkinter.tix import INTEGER
 from unittest.mock import sentinel
-from dotenv import Any
+from typing import Any
 
 import requests
 import fusyona.url.social as url
