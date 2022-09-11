@@ -77,7 +77,7 @@ def PostCreateCollection(
     response = requests.post(url=approvedLink, headers=headers)
 
     if len(response.content) != 0:
-        return response.json()
+        return response
 
     return { "Response" : str(response.status_code)}
 
