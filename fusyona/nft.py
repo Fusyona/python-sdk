@@ -1,6 +1,6 @@
 
 import requests
-from typing import Any
+from typing import Any, List
 import fusyona.url.nft as url
 from fusyona.utils.common import GetHeaders, ConstructRequest
 
@@ -98,16 +98,55 @@ def GetSingleCollection(
 
 def PostCreateToken(
         bearerToken : str, subscriptionKey : str, 
-        collectionId : str
+        collectionId : str,
+        attachment : bytes,
+        title : str,
+        description : str,
+        category : str,
+        supply : int,
+        tags : str,
     ) -> Any:
 
-    return ConstructRequest(
-        method="post", 
-        bearerToken=bearerToken,
-        subscriptionKey=subscriptionKey,
-        getUrl=url.CreateToken,
-        params=[collectionId]
+    headers = GetHeaders(
+        bearerToken, 
+        subscriptionKey
     )
+
+    files = {
+        "Attachment": attachment
+    }
+
+    body = {
+        "Title": title,
+        "Description" : description,
+        "Category" : category,
+        "Supply" : str(supply),
+        "Tags" : tags,
+        "Attributes" : "",
+        "Privacy" : "Public",
+        "ExternalLink" : "",
+        "Codes" : "1234;3456;234234;",
+    }
+
+    response = requests.post(
+        url=url.CreateToken(collectionId), headers=headers, 
+        data=body, files=files
+    )
+
+    if response.status_code != 200:
+        raise Exception(f"There is an error with the creation. Error: {response.status_code}")
+
+    approvedLink = response.json()['payment']['value']['approvedLink']
+
+    if len(approvedLink) == 0:
+        raise Exception(f"Error {response.status_code}: approvedLink is empty")
+
+    response = requests.post(url=approvedLink, headers=headers)
+
+    if len(response.content) != 0:
+        return response
+
+    return { "Response" : str(response.status_code)}
 
 
 def GetSingleToken(
