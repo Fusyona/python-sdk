@@ -32,6 +32,6 @@ def ConstructRequest(
         url=getUrl(*params), 
         headers=headers
     )
-    
-    return response.json()
+
+    return response
 
