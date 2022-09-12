@@ -4,7 +4,7 @@ from unittest.mock import sentinel
 from typing import Any
 
 import requests
-import fusyona.url.social as url
+import fusyona.social.url as url
 from fusyona.utils.common import ConstructRequest, GetHeaders
 
 def GetPages(

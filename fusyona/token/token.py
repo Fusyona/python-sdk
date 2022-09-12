@@ -1,7 +1,7 @@
 
 
 from typing import Any
-import fusyona.url.token as url
+import fusyona.token.url as url
 from fusyona.utils.common import ConstructRequest
 
 

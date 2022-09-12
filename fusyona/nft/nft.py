@@ -1,7 +1,7 @@
 
 import requests
 from typing import Any, List
-import fusyona.url.nft as url
+import fusyona.nft.url as url
 from fusyona.utils.common import GetHeaders, ConstructRequest
 
 

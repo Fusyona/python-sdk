@@ -1,7 +1,7 @@
 
 
 from typing import Any
-import fusyona.url.wallet as url
+import fusyona.wallet.url as url
 from fusyona.utils.common import ConstructRequest
 
 

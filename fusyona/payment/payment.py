@@ -1,7 +1,7 @@
 
 
 from typing import Any
-import fusyona.url.payment as url
+import fusyona.payment.url as url
 from fusyona.utils.common import ConstructRequest
 
 
