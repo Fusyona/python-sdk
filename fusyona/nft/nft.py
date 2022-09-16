@@ -1,43 +1,54 @@
 
 import requests
+from fusyona.nft.models.collection import Collection
 from typing import Any, List
 import fusyona.nft.url as url
 from fusyona.utils.common import GetHeaders, ConstructRequest
+from fusyona.nft.models.token import Token
+from fusyona.nft.models.single_token import SingleToken
 
 
 def GetCollectionWithPagination(
-        bearerToken : str, subscriptionKey : str, 
+        bearerToken : str, 
+        subscriptionKey : str, 
         pageNumber : int
-    ) -> Any:
+    ) -> List[Collection]:
 
-    return ConstructRequest(
+    response = ConstructRequest(
         method="get", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.CollectionsWithPagination,
-        params=[pageNumber]
+        url=url.CollectionsWithPagination(pageNumber)
     )
+
+    return [Collection(**collection) for collection in response.json()['data']]
 
 
 def GetCollectionsList(
         bearerToken : str, subscriptionKey : str
-    ) -> Any:
+    ) -> List[Collection]:
 
-    return ConstructRequest(
+    response = ConstructRequest(
         method="get", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.CollectionsList,
-        params=[]
+        url=url.CollectionsList()
     )
+
+    return [Collection(**collection) for collection in response.json()['data']]
 
 
 def PostCreateCollection(
-        bearerToken : str, subscriptionKey : str,
-        coverImage : bytes, logoImage : bytes,
-        featuredImage : bytes, blockchainNetwork : str,
-        name : str, description : str, 
-        royalties : float, category : str,
+        bearerToken : str, 
+        subscriptionKey : str,
+        coverImage : bytes, 
+        logoImage : bytes,
+        featuredImage : bytes, 
+        blockchainNetwork : str,
+        name : str, 
+        description : str, 
+        royalties : float, 
+        category : str,
         externalLink : str
     ) -> Any:
 
@@ -85,19 +96,21 @@ def PostCreateCollection(
 def GetSingleCollection(
         bearerToken : str, subscriptionKey : str, 
         collectionId : str
-    ) -> Any:
+    ) -> Collection:
 
-    return ConstructRequest(
+    response = ConstructRequest(
         method="get", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.SingleCollection,
-        params=[collectionId]
+        url=url.SingleCollection(collectionId)
     )
+
+    return Collection(**response.json())
 
 
 def PostCreateToken(
-        bearerToken : str, subscriptionKey : str, 
+        bearerToken : str, 
+        subscriptionKey : str, 
         collectionId : str,
         attachment : bytes,
         title : str,
@@ -150,63 +163,72 @@ def PostCreateToken(
 
 
 def GetSingleToken(
-        bearerToken : str, subscriptionKey : str, 
-        collectionId : str, tokenId : str
-    ) -> Any:
+        bearerToken : str, 
+        subscriptionKey : str, 
+        collectionId : str, 
+        tokenId : str
+    ) -> SingleToken:
 
-    return ConstructRequest(
+    response = ConstructRequest(
         method="get", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.SingleToken,
-        params=[collectionId, tokenId]
+        url=url.SingleToken(collectionId, tokenId)
     )
+
+    return SingleToken(**response.json())
 
   
 def GetTokensList(
         bearerToken : str, subscriptionKey : str, 
         collectionId : str
-    ) -> Any:
+    ) -> List[Token]:
 
-    return ConstructRequest(
+    response = ConstructRequest(
         method="get", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.TokensList,
-        params=[collectionId]
+        url=url.TokensList(collectionId)
     )
+
+    return [Token(**token) for token in response.json()]
 
 
 def GetTokensListWithPagination(
-        bearerToken : str, subscriptionKey : str, 
-        collectionId : str, pageNumber : int
-    ) -> Any:
+        bearerToken : str, 
+        subscriptionKey : str, 
+        collectionId : str, 
+        pageNumber : int
+    ) -> List[Token]:
 
-    return ConstructRequest(
+    response = ConstructRequest(
         method="get", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.TokensListWithPagination,
-        params=[collectionId, pageNumber]
+        url=url.TokensListWithPagination(collectionId, pageNumber)
     )
+
+    return [Token(**token) for token in response.json()['data']]
 
 
 def GetGiftsListWithPagination(
-        bearerToken : str, subscriptionKey : str, 
-        collectionId : str, pageNumber : int
+        bearerToken : str, 
+        subscriptionKey : str, 
+        collectionId : str, 
+        pageNumber : int
     ) -> Any:
 
     return ConstructRequest(
         method="get", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.GiftsListWithPagination,
-        params=[collectionId, pageNumber]
+        url=url.GiftsListWithPagination(collectionId, pageNumber)
     )
 
     
 def PostPaymentConfirmation(
-        bearerToken : str, subscriptionKey : str, 
+        bearerToken : str, 
+        subscriptionKey : str, 
         id : str
     ) -> Any:
 
@@ -214,13 +236,13 @@ def PostPaymentConfirmation(
         method="post", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.PaymentConfirmation,
-        params=[id]
+        url=url.PaymentConfirmation(id)
     )
 
 
 def PostPaymentCancel(
-        bearerToken : str, subscriptionKey : str, 
+        bearerToken : str, 
+        subscriptionKey : str, 
         id : str
     ) -> Any:
 
@@ -228,7 +250,6 @@ def PostPaymentCancel(
         method="post", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.PaymentCancel,
-        params=[id]
+        url=url.PaymentCancel(id)
     )
 
