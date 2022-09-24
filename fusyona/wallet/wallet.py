@@ -3,47 +3,51 @@
 from typing import Any
 import fusyona.wallet.url as url
 from fusyona.utils.common import ConstructRequest
-
+from fusyona.wallet.models.balance import Balance
+from fusyona.wallet.models.client_address import Client_Address
 
 def GetBalanceAsync(
         bearerToken : str, subscriptionKey : str, 
         address_id : str
-    ) -> Any:
+    ) -> Balance:
 
-    return ConstructRequest(
+    respons = ConstructRequest(
         method="get", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.BalanceAsync,
-        params=[address_id]
+        url=url.BalanceAsync(address_id)
     )
+
+    return Balance(**respons.json())
 
 
 def GetFullBalanceAsync(
         bearerToken : str, subscriptionKey : str, 
         address_id : str
-    ) -> Any:
+    ) -> Balance:
 
-    return ConstructRequest(
+    respons = ConstructRequest(
         method="get", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.FullBalanceAsync,
-        params=[address_id]
+        url=url.FullBalanceAsync(address_id)
     )
+
+    return Balance(**respons.json())
 
 
 def GetClientAddressesAndBalanceAsync(
         bearerToken : str, subscriptionKey : str
     ) -> Any:
 
-    return ConstructRequest(
+    respons = ConstructRequest(
         method="get", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.ClientAddressesAndBalanceAsync,
-        params=[]
+        url=url.ClientAddressesAndBalanceAsync()
     )
+
+    return [Client_Address(**client) for client in respons.json()['list']]
 
 
 def GetCryptocurrenciesAsync(
@@ -54,8 +58,7 @@ def GetCryptocurrenciesAsync(
         method="get", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.CryptocurrenciesAsync,
-        params=[]
+        url=url.CryptocurrenciesAsync()
     )
 
 
@@ -68,8 +71,7 @@ def GetCryptocurrencySubUnistAsync(
         method="get", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.CryptocurrencySubUnistAsync,
-        params=[cryptocurrency_id]
+        url=url.CryptocurrencySubUnistAsync(cryptocurrency_id)
     )
 
 
@@ -83,7 +85,6 @@ def GetWithdrawalAsync(
         method="post", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.WithdrawalAsync,
-        params=[address_id, to_public_key, amount]
+        url=url.WithdrawalAsync(address_id, to_public_key, amount)
     )
 
