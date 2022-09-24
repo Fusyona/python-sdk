@@ -11,4 +11,4 @@ respons = GetCollectionWithPagination(
     pageNumber=1,
 )
 
-print(respons.json())
+print(respons)

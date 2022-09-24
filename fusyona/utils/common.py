@@ -18,8 +18,9 @@ def ConstructRequest(
         method : str, 
         bearerToken : str, 
         subscriptionKey : str, 
-        getUrl : Callable, 
-        params : List[Any]
+        url : str, 
+        data : Any = None,
+        files : Any = None,
     ) -> Any:
 
     headers = GetHeaders(
@@ -29,8 +30,10 @@ def ConstructRequest(
 
     response = requests.request(
         method=method,
-        url=getUrl(*params), 
-        headers=headers
+        url=url, 
+        headers=headers,
+        data=data,
+        files=files,
     )
 
     return response
