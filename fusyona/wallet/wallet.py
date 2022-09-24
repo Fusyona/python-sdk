@@ -7,6 +7,7 @@ from fusyona.wallet.models.balance import Balance
 from fusyona.wallet.models.client_address import Client_Address
 from fusyona.wallet.models.cryptocurrency import Cryptocurrency
 
+
 def GetBalanceAsync(
         bearerToken : str, subscriptionKey : str, 
         address_id : str
