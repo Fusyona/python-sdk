@@ -5,6 +5,7 @@ import fusyona.wallet.url as url
 from fusyona.utils.common import ConstructRequest
 from fusyona.wallet.models.balance import Balance
 from fusyona.wallet.models.client_address import Client_Address
+from fusyona.wallet.models.cryptocurrency import Cryptocurrency
 
 def GetBalanceAsync(
         bearerToken : str, subscriptionKey : str, 
@@ -54,12 +55,14 @@ def GetCryptocurrenciesAsync(
         bearerToken : str, subscriptionKey : str
     ) -> Any:
 
-    return ConstructRequest(
+    respons = ConstructRequest(
         method="get", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
         url=url.CryptocurrenciesAsync()
     )
+
+    return [Cryptocurrency(**crypto) for crypto in respons.json()['list']]
 
 
 def GetCryptocurrencySubUnistAsync(
