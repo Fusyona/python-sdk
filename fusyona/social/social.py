@@ -1,6 +1,3 @@
-from pickletools import int4, long1
-from tkinter.tix import INTEGER
-from unittest.mock import sentinel
 from typing import Any
 
 import requests
@@ -15,8 +12,7 @@ def GetPages(
         method="get", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.GetPages,
-        params=[]
+        url=url.GetPages()
     )
 
 def DeletePage(
@@ -28,7 +24,7 @@ def DeletePage(
         method="delete", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.DeletePage,
+        url=url.DeletePage,
         params=[page_id]
     )
 
@@ -41,7 +37,7 @@ def GetPage(
         method="get", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.GetPage,
+        url=url.GetPage,
         params=[page_id]
     )
 
@@ -127,7 +123,7 @@ def PostPageFollow(
         method="post", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.PostPageFollow,
+        url=url.PostPageFollow,
         params=[page_id]
     )
 
@@ -140,7 +136,7 @@ def GetPageFollowers(
         method="get", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.GetPageFollowers,
+        url=url.GetPageFollowers,
         params=[page_id]
     )
 
@@ -153,7 +149,7 @@ def DeletePageFollower(
         method="delete", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.DeletePageFollower,
+        url=url.DeletePageFollower,
         params=[page_id, follower_id]
     )
 
@@ -166,7 +162,7 @@ def GetPagePosts(
         method="get", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.GetPagePosts,
+        url=url.GetPagePosts,
         params=[page_id]
     )
 
@@ -218,7 +214,7 @@ def DeletePagePost(
         method="delete", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.DeletePagePost,
+        url=url.DeletePagePost,
         params=[page_id, post_id]
     )
 
@@ -231,7 +227,7 @@ def GetPagePost(
         method="get", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.GetPagePost,
+        url=url.GetPagePost,
         params=[page_id, post_id]
     )
 
@@ -282,7 +278,7 @@ def GetPagePostComments(
         method="get", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.GetPagePostComments,
+        url=url.GetPagePostComments,
         params=[page_id, post_id]
     )
 
@@ -333,7 +329,7 @@ def DeletePagePostComment(
         method="delete", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.DeletePagePostComment,
+        url=url.DeletePagePostComment,
         params=[page_id, post_id, comment_id]
     )
 
@@ -346,7 +342,7 @@ def GetPagePostComment(
         method="get", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.GetPagePostComment,
+        url=url.GetPagePostComment,
         params=[page_id, post_id, comment_id]
     )
 
@@ -397,7 +393,7 @@ def GetPagePostSentiments(
         method="get", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.GetPagePostSentiments,
+        url=url.GetPagePostSentiments,
         params=[page_id, post_id]
     )
 
@@ -447,7 +443,7 @@ def DeletePagePostSentiment(
         method="delete", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.DeletePagePostSentiment,
+        url=url.DeletePagePostSentiment,
         params=[page_id, post_id, sentiment_id]
     )
 
@@ -460,7 +456,7 @@ def GetPagePostSentiment(
         method="get", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.GetPagePostSentiment,
+        url=url.GetPagePostSentiment,
         params=[page_id, post_id, sentiment_id]
     )
 
@@ -510,7 +506,7 @@ def DeletePagePostSentiment(
         method="delete", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.DeletePagePostSentiment,
+        url=url.DeletePagePostSentiment,
         params=[page_id, post_id, sentiment_id]
     )
 
@@ -523,7 +519,7 @@ def GetPagePostWithPagination(
         method="get", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.GetPagePostWithPagination,
+        url=url.GetPagePostWithPagination,
         params=[page_id, post_id, pagination]
     )
 
@@ -536,7 +532,7 @@ def GetPageTokens(
         method="get", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.GetPageTokens,
+        url=url.GetPageTokens,
         params=[page_id]
     )
 
@@ -549,7 +545,7 @@ def GetPageToken(
         method="get", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.GetPageToken,
+        url=url.GetPageToken,
         params=[page_id, token_id]
     )
 
@@ -562,7 +558,7 @@ def PostPageUnfollow(
         method="post", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.PostPageUnfollow,
+        url=url.PostPageUnfollow,
         params=[collectionId, follower_id]
     )
 
@@ -575,6 +571,6 @@ def GetPagesWithPagination(
         method="get", 
         bearerToken=bearerToken,
         subscriptionKey=subscriptionKey,
-        getUrl=url.GetPagesWithPagination,
+        url=url.GetPagesWithPagination,
         params=[page_id,pagination]
     )
