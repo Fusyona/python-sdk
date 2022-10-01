@@ -35,7 +35,7 @@ def GetCollectionsList(
         url=url.CollectionsList()
     )
 
-    return [Collection(**collection) for collection in response.json()['data']]
+    return [Collection(**collection) for collection in response.json()]
 
 
 def PostCreateCollection(
@@ -104,7 +104,7 @@ def GetSingleCollection(
         subscriptionKey=subscriptionKey,
         url=url.SingleCollection(collectionId)
     )
-
+    
     return Collection(**response.json())
 
 
@@ -190,7 +190,7 @@ def GetTokensList(
         subscriptionKey=subscriptionKey,
         url=url.TokensList(collectionId)
     )
-
+    print(response)
     return [Token(**token) for token in response.json()]
 
 
@@ -209,47 +209,4 @@ def GetTokensListWithPagination(
     )
 
     return [Token(**token) for token in response.json()['data']]
-
-
-def GetGiftsListWithPagination(
-        bearerToken : str, 
-        subscriptionKey : str, 
-        collectionId : str, 
-        pageNumber : int
-    ) -> Any:
-
-    return ConstructRequest(
-        method="get", 
-        bearerToken=bearerToken,
-        subscriptionKey=subscriptionKey,
-        url=url.GiftsListWithPagination(collectionId, pageNumber)
-    )
-
-    
-def PostPaymentConfirmation(
-        bearerToken : str, 
-        subscriptionKey : str, 
-        id : str
-    ) -> Any:
-
-    return ConstructRequest(
-        method="post", 
-        bearerToken=bearerToken,
-        subscriptionKey=subscriptionKey,
-        url=url.PaymentConfirmation(id)
-    )
-
-
-def PostPaymentCancel(
-        bearerToken : str, 
-        subscriptionKey : str, 
-        id : str
-    ) -> Any:
-
-    return ConstructRequest(
-        method="post", 
-        bearerToken=bearerToken,
-        subscriptionKey=subscriptionKey,
-        url=url.PaymentCancel(id)
-    )
 
